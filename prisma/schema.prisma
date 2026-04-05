@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum UserRole {
+  viewer
+  analyst
+  admin
+}
+
+enum UserStatus {
+  active
+  inactive
+  locked
+}
+
+enum RecordType {
+  income
+  expense
+}
+
+enum AuditAction {
+  auth_login_success
+  auth_login_failure
+  auth_refresh
+  auth_logout
+  user_create
+  user_update
+  record_create
+  record_update
+  record_delete
+}
+
+model User {
+  id           String           @id @default(cuid())
+  name         String
+  email        String           @unique
+  passwordHash String
+  role         UserRole
+  status       UserStatus       @default(active)
+  failedLoginAttempts Int       @default(0)
+  lockUntil    DateTime?
+  lastLoginAt  DateTime?
+  passwordChangedAt DateTime?
+  createdAt    DateTime         @default(now())
+  records      FinancialRecord[]
+  refreshTokens RefreshToken[]
+  auditLogs    AuditLog[]
+}
+
+model FinancialRecord {
+  id        String     @id @default(cuid())
+  amount    Float
+  type      RecordType
+  category  String
+  date      DateTime
+  notes     String?
+  createdBy String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  deletedAt DateTime?
+
+  user User @relation(fields: [createdBy], references: [id])
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String   @unique
+  revokedAt DateTime?
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model AuditLog {
+  id        String     @id @default(cuid())
+  userId    String?
+  action    AuditAction
+  ip        String?
+  userAgent String?
+  metadata  Json?
+  createdAt DateTime   @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+}
