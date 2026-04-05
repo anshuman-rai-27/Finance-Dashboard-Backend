@@ -73,7 +73,7 @@ router.get(
   "/recent",
   validate(recentQuerySchema),
   asyncHandler(async (req, res) => {
-    const { limit } = req.query as z.infer<typeof recentQuerySchema>["query"];
+    const { limit } = req.query as unknown as z.infer<typeof recentQuerySchema>["query"];
     const records = await prisma.financialRecord.findMany({
       where: { deletedAt: null },
       take: limit,
@@ -88,7 +88,7 @@ router.get(
   "/trends",
   validate(trendsQuerySchema),
   asyncHandler(async (req, res) => {
-    const { period, dateFrom, dateTo } = req.query as z.infer<typeof trendsQuerySchema>["query"];
+    const { period, dateFrom, dateTo } = req.query as unknown as z.infer<typeof trendsQuerySchema>["query"];
 
     const where: any = { deletedAt: null };
     if (dateFrom || dateTo) {

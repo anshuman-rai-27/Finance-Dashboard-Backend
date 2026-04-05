@@ -1,11 +1,11 @@
 ﻿import { prisma } from "../config/prisma.js";
-import type { AuditAction } from "@prisma/client";
+import type { AuditAction, Prisma } from "@prisma/client";
 
 export type AuditContext = {
   userId?: string | null;
   ip?: string | null;
   userAgent?: string | null;
-  metadata?: Record<string, unknown> | null;
+  metadata?: Prisma.InputJsonValue | null;
 };
 
 export const writeAuditLog = async (action: AuditAction, context: AuditContext) => {

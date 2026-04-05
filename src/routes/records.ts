@@ -88,7 +88,7 @@ router.get(
   validate(listQuerySchema),
   asyncHandler(async (req, res) => {
     const { dateFrom, dateTo, category, type, search, page, pageSize, includeDeleted } =
-      req.query as z.infer<typeof listQuerySchema>["query"];
+      req.query as unknown as z.infer<typeof listQuerySchema>["query"];
 
     const where: any = {};
     if (!includeDeleted) {

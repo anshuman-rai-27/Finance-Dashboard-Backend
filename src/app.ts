@@ -40,7 +40,7 @@ export const createApp = () => {
       swaggerUi.setup(swaggerSpec, {
         swaggerOptions: {
           persistAuthorization: true,
-          requestInterceptor: (req) => {
+          requestInterceptor: (req: any) => {
             try {
               if (req?.body && typeof req.body === "string") {
                 req.body = req.body.replace(/\{ts\}/g, String(Date.now()));

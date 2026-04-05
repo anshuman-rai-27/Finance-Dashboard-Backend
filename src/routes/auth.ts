@@ -1,5 +1,6 @@
 ﻿import { Router } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { type SignOptions } from "jsonwebtoken";
+import type { StringValue } from "ms";
 import { z } from "zod";
 import { prisma } from "../config/prisma.js";
 import { env } from "../config/env.js";
@@ -194,10 +195,13 @@ router.post(
       }
     });
 
+    const tokenOptions: SignOptions = {
+      expiresIn: env.jwtExpiresIn as unknown as StringValue
+    };
     const token = jwt.sign(
       { userId: user.id, role: user.role },
       env.jwtSecret,
-      { expiresIn: env.jwtExpiresIn }
+      tokenOptions
     );
 
     await writeAuditLog("auth_login_success", {
@@ -249,10 +253,13 @@ router.post(
       }
     });
 
+    const tokenOptions: SignOptions = {
+      expiresIn: env.jwtExpiresIn as unknown as StringValue
+    };
     const token = jwt.sign(
       { userId: user.id, role: user.role },
       env.jwtSecret,
-      { expiresIn: env.jwtExpiresIn }
+      tokenOptions
     );
 
     await writeAuditLog("auth_refresh", {

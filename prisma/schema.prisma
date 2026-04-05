@@ -8,6 +8,58 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model User {
+  id                  String            @id @default(cuid())
+  name                String
+  email               String            @unique
+  passwordHash        String
+  createdAt           DateTime          @default(now())
+  failedLoginAttempts Int               @default(0)
+  lastLoginAt         DateTime?
+  lockUntil           DateTime?
+  passwordChangedAt   DateTime?
+  role                UserRole
+  status              UserStatus        @default(active)
+  auditLogs           AuditLog[]
+  records             FinancialRecord[]
+  refreshTokens       RefreshToken[]
+}
+
+model FinancialRecord {
+  id        String     @id @default(cuid())
+  amount    Float
+  category  String
+  date      DateTime
+  notes     String?
+  createdBy String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  type      RecordType
+  deletedAt DateTime?
+  user      User       @relation(fields: [createdBy], references: [id])
+}
+
+model RefreshToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+  expiresAt DateTime
+  user      User      @relation(fields: [userId], references: [id])
+}
+
+model AuditLog {
+  id        String      @id @default(cuid())
+  userId    String?
+  action    AuditAction
+  ip        String?
+  userAgent String?
+  metadata  Json?
+  createdAt DateTime    @default(now())
+  user      User?       @relation(fields: [userId], references: [id])
+}
+
 enum UserRole {
   viewer
   analyst
@@ -35,59 +87,4 @@ enum AuditAction {
   record_create
   record_update
   record_delete
-}
-
-model User {
-  id           String           @id @default(cuid())
-  name         String
-  email        String           @unique
-  passwordHash String
-  role         UserRole
-  status       UserStatus       @default(active)
-  failedLoginAttempts Int       @default(0)
-  lockUntil    DateTime?
-  lastLoginAt  DateTime?
-  passwordChangedAt DateTime?
-  createdAt    DateTime         @default(now())
-  records      FinancialRecord[]
-  refreshTokens RefreshToken[]
-  auditLogs    AuditLog[]
-}
-
-model FinancialRecord {
-  id        String     @id @default(cuid())
-  amount    Float
-  type      RecordType
-  category  String
-  date      DateTime
-  notes     String?
-  createdBy String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  deletedAt DateTime?
-
-  user User @relation(fields: [createdBy], references: [id])
-}
-
-model RefreshToken {
-  id        String   @id @default(cuid())
-  userId    String
-  tokenHash String   @unique
-  revokedAt DateTime?
-  createdAt DateTime @default(now())
-  expiresAt DateTime
-
-  user User @relation(fields: [userId], references: [id])
-}
-
-model AuditLog {
-  id        String     @id @default(cuid())
-  userId    String?
-  action    AuditAction
-  ip        String?
-  userAgent String?
-  metadata  Json?
-  createdAt DateTime   @default(now())
-
-  user User? @relation(fields: [userId], references: [id])
 }
