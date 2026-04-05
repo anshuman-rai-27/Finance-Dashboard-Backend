@@ -6,9 +6,9 @@ export const swaggerSpec = swaggerJSDoc({
     info: {
       title: "Finance Dashboard API",
       version: "1.0.0",
-      description: "Role-based finance backend API.\n\nSwagger UI quick start:\n1) For the first admin, set ALLOW_BOOTSTRAP=true and restart the server.\n2) Call /auth/register to create the first admin.\n3) Call /auth/login to get JWT + refresh token.\n4) Click Authorize and paste the JWT.\n5) Call the remaining endpoints."
+      description: "Role-based finance backend API.\n\nSwagger UI quick start:\n1) Call /auth/register to create the first admin (only if no users exist).\n2) Call /auth/login to get JWT + refresh token.\n3) Click Authorize and paste the JWT.\n4) Call the remaining endpoints."
     },
-    servers: [{ url: "http://localhost:3000" }],
+    servers: [{ url: "/" }],
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -31,7 +31,7 @@ export const swaggerSpec = swaggerJSDoc({
       "/auth/register": {
         post: {
           summary: "Register user (bootstrap/admin only)",
-          description: "First admin requires ALLOW_BOOTSTRAP=true. Otherwise, include an admin JWT.",
+          description: "Creates the first admin if no users exist. Otherwise, include an admin JWT.",
           security: [],
           requestBody: {
             required: true,
@@ -58,7 +58,7 @@ export const swaggerSpec = swaggerJSDoc({
           },
           responses: {
             "201": { description: "User created" },
-            "403": { description: "Bootstrap disabled or forbidden" }
+            "403": { description: "Forbidden" }
           }
         }
       },
