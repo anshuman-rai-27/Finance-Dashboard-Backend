@@ -27,7 +27,6 @@ export const env = {
   refreshTokenDays: Number(process.env.REFRESH_TOKEN_TTL_DAYS || 7),
   lockoutMaxAttempts: Number(process.env.LOCKOUT_MAX_ATTEMPTS || 5),
   lockoutMinutes: Number(process.env.LOCKOUT_DURATION_MIN || 15),
-  allowBootstrap: process.env.ALLOW_BOOTSTRAP === "true",
   corsOrigins,
   enableDocs: process.env.ENABLE_DOCS === "true"
 };

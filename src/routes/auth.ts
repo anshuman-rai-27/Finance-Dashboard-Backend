@@ -69,10 +69,6 @@ router.post(
 
     const userCount = await prisma.user.count();
     let adminUserId: string | null = null;
-    if (userCount === 0 && !env.allowBootstrap) {
-      throw new AppError("Admin bootstrap disabled", 403);
-    }
-
     if (userCount > 0) {
       const authHeader = req.headers.authorization;
       if (!authHeader || !authHeader.startsWith("Bearer ")) {

@@ -31,7 +31,7 @@ Authorization: Bearer <token>
 ## Auth
 
 ### POST `/auth/register`
-Bootstrap or admin-only user creation.
+Creates the first admin if no users exist. Otherwise, requires an admin JWT.
 
 **Request**
 ```json
@@ -42,10 +42,6 @@ Bootstrap or admin-only user creation.
   "role": "admin"
 }
 ```
-
-**Notes**
-- If no users exist, set `ALLOW_BOOTSTRAP=true` and restart server.
-- Otherwise, include admin JWT.
 
 **Response 201**
 ```json

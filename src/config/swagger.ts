@@ -6,7 +6,7 @@ export const swaggerSpec = swaggerJSDoc({
     info: {
       title: "Finance Dashboard API",
       version: "1.0.0",
-      description: "Role-based finance backend API.\n\nSwagger UI quick start:\n1) For the first admin, set ALLOW_BOOTSTRAP=true and restart the server.\n2) Call /auth/register to create the first admin.\n3) Call /auth/login to get JWT + refresh token.\n4) Click Authorize and paste the JWT.\n5) Call the remaining endpoints.\n\nIf you already have an admin, skip bootstrap and just login + authorize."
+      description: "Role-based finance backend API.\n\nSwagger UI quick start:\n1) For the first admin, set ALLOW_BOOTSTRAP=true and restart the server.\n2) Call /auth/register to create the first admin.\n3) Call /auth/login to get JWT + refresh token.\n4) Click Authorize and paste the JWT.\n5) Call the remaining endpoints."
     },
     servers: [{ url: "http://localhost:3000" }],
     components: {

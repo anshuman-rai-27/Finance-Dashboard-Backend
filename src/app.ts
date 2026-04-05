@@ -33,7 +33,7 @@ export const createApp = () => {
     legacyHeaders: false
   });
 
-  if (!env.isProd || env.enableDocs) {
+  if (true) {
     app.use(
       "/docs",
       swaggerUi.serve,

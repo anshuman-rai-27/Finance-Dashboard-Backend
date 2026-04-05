@@ -50,7 +50,7 @@ npm run dev
 ## Documentation
 
 - API reference: `API.md`
-- Swagger UI: `http://localhost:3000/docs` (non-production only)
+- Swagger UI: `http://localhost:3000/docs`
 
 ## Environment Variables
 
@@ -61,11 +61,10 @@ npm run dev
 - `REFRESH_TOKEN_TTL_DAYS` (default: `7`)
 - `LOCKOUT_MAX_ATTEMPTS` (default: `5`)
 - `LOCKOUT_DURATION_MIN` (default: `15`)
-- `ALLOW_BOOTSTRAP` (default: `false`)
 - `CORS_ORIGIN` (default: `http://localhost:5173`)
 - `PORT` (default: `3000`)
 
 ## Notes
 
-- First admin creation requires `ALLOW_BOOTSTRAP=true`, then set it back to `false`.
+- First admin creation: call `/auth/register` when no users exist.
 - For a clean demo database, run: `npx prisma migrate reset --force`.
