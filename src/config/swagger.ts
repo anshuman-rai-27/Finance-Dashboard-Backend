@@ -6,7 +6,7 @@ export const swaggerSpec = swaggerJSDoc({
     info: {
       title: "Finance Dashboard API",
       version: "1.0.0",
-      description: "Role-based finance backend API.\n\nSwagger UI quick start:\n1) Call /auth/register to create the first admin (only if no users exist).\n2) Call /auth/login to get JWT + refresh token.\n3) Click Authorize and paste the JWT.\n4) Call the remaining endpoints."
+      description: "Role-based finance backend API.\n\nSwagger UI quick start:\n1) Call /auth/register to create the first admin (only if no users exist).\n2) Copy the email you used in /auth/register and use it in /auth/login.\n3) Call /auth/login to get JWT + refresh token.\n4) Click Authorize and paste the JWT.\n5) Call the remaining endpoints.\n\nNotes:\n- /users and all write operations require an admin JWT.\n- GET /records supports pagination (page, pageSize) and search.\n- DELETE /records is a soft delete; use includeDeleted=true to view deleted records."
     },
     servers: [{ url: "/" }],
     components: {
