@@ -28,5 +28,6 @@ export const env = {
   lockoutMaxAttempts: Number(process.env.LOCKOUT_MAX_ATTEMPTS || 5),
   lockoutMinutes: Number(process.env.LOCKOUT_DURATION_MIN || 15),
   allowBootstrap: process.env.ALLOW_BOOTSTRAP === "true",
-  corsOrigins
+  corsOrigins,
+  enableDocs: process.env.ENABLE_DOCS === "true"
 };
